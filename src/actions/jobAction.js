@@ -227,3 +227,29 @@ export const sendProduct = (data, id) => async distpatch => {
         history.push(`/edit-job/${id}`);
     }
 }
+
+export const editProductJob = (data, id) => async distpatch => {
+    const response = await apildm.patch(`/job/editProductToJob`, {...data}, config);
+    if(response.data.resCode === '204'){
+        distpatch({
+            type: ADD_MESSAGE,
+            payload: {
+                message: response.data.resDesc,
+                infoMessage: 'Update Success!',
+                colorMessage: 'info',
+                isSubmiting: false
+            }
+        });
+    }else{
+        distpatch({
+            type: ADD_MESSAGE,
+            payload: {
+                message: response.data.resDesc,
+                infoMessage: 'Error!',
+                colorMessage: 'danger',
+                isSubmiting: false
+            }
+        });
+    }
+    history.push(`/edit-job/${id}`);
+}

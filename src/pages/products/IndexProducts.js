@@ -1,36 +1,46 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getProduct} from '../../actions/productAction';
+import {getProduct, deleteProduct} from '../../actions/productAction';
 
 import HeaderBody from '../../components/HeaderBody';
 import MessageComp from '../../components/Message';
+import FormProduct from './FormProduct';
 
 class IndexProducts extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+        this.reff = createRef();
         this.state = {
             currentPage: 1,
-            todosPerPage: 2,
+            todosPerPage: 5,
         }
     }
 
     componentDidMount(){
+        setTimeout(() => {
+            this.props.getProduct(this.state.todosPerPage, this.state.currentPage);
+        }, 100)
         this.props.getProduct(this.state.todosPerPage, this.state.currentPage);
     }
 
-    renderAction(id){
-        return (
-            <>
-                <button className="btn btn-primary btn-sm mx-1" onClick={() => this.handleDelete(id)}><i className="fas fa-edit"></i></button>
-                <button className="btn btn-danger btn-sm" onClick={() => this.handleDelete(id)}><i className="fas fa-trash"></i></button>
-            </>
-        )
+    handleDelete = (id) => {
+        this.props.deleteProduct(id);
+        this.componentDidMount();
     }
 
-    handleDelete(id){
-        this.props.deleteCategory(id);
-        this.props.getProduct(this.props.currentPage, this.state.todosPerPage);
+    handleEdit = (res) => {
+        this.child.getCategory();
+        this.child.handleEdit(res);
+    }
+
+    renderAction(res){
+        return (
+            <>
+                <button className="btn btn-primary btn-sm mx-1" onClick={() => this.handleEdit(res)}><i className="fas fa-edit"></i></button>
+                <button className="btn btn-danger btn-sm" onClick={() => this.handleDelete(res.id)}><i className="fas fa-trash"></i></button>
+            </>
+        )
     }
 
     renderDataProduct(){
@@ -40,14 +50,14 @@ class IndexProducts extends Component {
                     <tr>
                         <td>{index + 1}</td>
                         <td>{res.title}</td>
-                        <td></td>
+                        <td><center>{res.thumbnail && <img src={res.thumbnail} className="img-thumbnail" alt={res.thumbnailPath} style={{height: '90px', width: '90px'}}/>}</center></td>
                         <td>{res.weight}</td>
                         <td>{res.stock}</td>
                         <td>{res.price}</td>
                         <td><span className="badge bg-success">{res.category ? res.category.name: ''}</span></td>
                         <td>{res.description}</td>
                         <td>
-                            {this.renderAction(res.id)}
+                            {this.renderAction(res)}
                         </td>
                     </tr>
                 </tbody>
@@ -107,15 +117,17 @@ class IndexProducts extends Component {
 
                     <MessageComp/>
 
+                    <FormProduct
+                        childRef={ref => (this.child = ref)}
+                        todosPerPage = {this.state.todosPerPage} 
+                        currentPage = {this.state.currentPage}
+                        componentDidMount = {this.componentDidMount}
+                    />
+
                     <div className="card mb-4">
                         <div className="card-header">
                             <i className="fas fa-table me-1"></i>
                             Data Product
-                            <div className="float-end">
-                                <Link to="/add-user" className="btn btn-success mt-10">
-                                    <i className="fas fa-plus-square"></i> Create Product
-                                </Link>
-                            </div>
                         </div>
                         <div className="card-body">
                             <table className="table table-bordered">
@@ -149,4 +161,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {getProduct})(IndexProducts);
+export default connect(mapStateToProps, {getProduct, deleteProduct})(IndexProducts);

@@ -5,7 +5,11 @@ import {deleteMessage, getMessage} from '../actions/message';
 class MessageComp extends Component {
     componentDidMount(){
         this.props.getMessage();
+        setTimeout(() => {
+            this.props.deleteMessage();
+        }, 6000)
     }
+
     render(){
         return (
             <>

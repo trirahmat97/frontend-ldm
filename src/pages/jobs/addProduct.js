@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {getProduct} from '../../actions/productAction';
 import {getMessage, addMessage} from '../../actions/message';
-import {deleteJobProduct, sendProduct} from '../../actions/jobAction';
+import {deleteJobProduct, sendProduct, editProductJob} from '../../actions/jobAction';
 import apildm from '../../apis/apildm';
 
 class AddProduct extends Component {
@@ -65,7 +65,20 @@ class AddProduct extends Component {
             keterangan: Array.isArray(this.state.keterangan) ? this.state.keterangan[0] : this.state.keterangan,
             lokasi_pemasangan: Array.isArray(this.state.lokasi_pemasangan) ? this.state.lokasi_pemasangan[0] : this.state.lokasi_pemasangan
         }
-        this.props.sendProduct(dataBody, this.props.id);
+        if(this.state.icon){
+            this.props.sendProduct(dataBody, this.props.id);
+            this.componentDidMount();
+        }else{
+            const dataBodyUpdate = {
+                productId: Array.isArray(this.state.product) ? this.state.product[0] : this.state.product,
+                jobId: this.props.id,
+                jumlah: Array.isArray(this.state.jumlah) ? this.state.jumlah[0] : this.state.jumlah,
+                keterangan: Array.isArray(this.state.keterangan) ? this.state.keterangan[0] : this.state.keterangan,
+                lokasi_pemasangan: Array.isArray(this.state.lokasi_pemasangan) ? this.state.lokasi_pemasangan[0] : this.state.lokasi_pemasangan
+            }
+            this.props.editProductJob(dataBodyUpdate, this.props.id);
+            this.componentDidMount();
+        }
         this.setState({
             product: '',
             jumlah: 0,
@@ -170,7 +183,7 @@ class AddProduct extends Component {
                                                 <button className={this.state.color} type="submit"><i className="fas fa-edit"></i> Edit</button>
                                             )
                                         }
-                                        
+                                        <span onClick={() => this.handleGetJobById()} class="btn btn-primary mx-2"><i className="fa fa-sync-alt"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -206,4 +219,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {getMessage, getProduct, addMessage, deleteJobProduct, sendProduct})(AddProduct);
+export default connect(mapStateToProps, {getMessage, getProduct, addMessage, deleteJobProduct, sendProduct, editProductJob})(AddProduct);

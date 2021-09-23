@@ -19,8 +19,10 @@ import IndexCategories from "./pages/categories/IndexCategories";
 import IndexJob from "./pages/jobs/indexJob";
 import createJob from "./pages/jobs/createJob";
 import EditJob from "./pages/jobs/editJob";
+import IndexReport from "./pages/report/IndexReport";
 
 const App = ({auth}) => {
+    console.log(auth.tokenExpires);
     if(auth.isAuthenticated){
         return (
             <Router history={history}>
@@ -29,20 +31,24 @@ const App = ({auth}) => {
                         <div id="layoutSidenav">
                             <Sidenav/>
                             <div id="layoutSidenav_content">
+                                <div>
+                                    {
+                                        setTimeout(() => {
+                                            alert('login berakhir');
+                                        }, auth.tokenExpires)
+                                    }
+                                </div>
                                 <Switch>
                                     <Route exact path='/' component={Body} />
                                     <Route path='/users/' component={Users} />
                                     <Route exact path='/add-user/' component={CreateUser} />
                                     <Route path='/edit-user/:id' exact component={EditUser} />
-
                                     <Route path='/products' exact component={IndexProducts}/>
-
                                     <Route path='/categories' exact component={IndexCategories}/>
-
                                     <Route path='/jobs' exact component={IndexJob}/>
                                     <Route path='/add-job' exact component={createJob}/>
                                     <Route path='/edit-job/:id' exact component={EditJob}/>
-
+                                    <Route path='/reports' exact component={IndexReport}/>
                                     <Route exact path='/login/' component={Login} />
                                     <Route exact path='/dashboard/' component={Dashboard}/>
                                     <Route exact path='/nav/' component={Body2} />

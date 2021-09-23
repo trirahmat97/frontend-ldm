@@ -9,13 +9,13 @@ const HeaderBody = ({data}) => {
                 <li className="breadcrumb-item">Management Data {data.title}</li>
                 <li className="breadcrumb-item active"><Link to={data.pageLink}>{data.title}</Link></li>
             </ol>
-            <div className="card mb-4">
+            {/* <div className="card mb-4">
                 <div className="card-body">
                     <p className="mb-0">
                         Berikut merupakan data {data.title} aplikasi App-LDM
                     </p>
                 </div>
-            </div>
+            </div> */}
         </>
     )
 }

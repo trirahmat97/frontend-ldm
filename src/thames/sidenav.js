@@ -34,7 +34,7 @@ const Sidenav = ({auth}) => {
                                 <div className="sb-nav-link-icon"><i className="fas fa-chart-area"></i></div>
                                 Daftar JOB
                             </NavLink>
-                            <NavLink className="nav-link" to="/report">
+                            <NavLink className="nav-link" to="/reports">
                                 <div className="sb-nav-link-icon"><i className="fas fa-table"></i></div>
                                 Reports
                             </NavLink>

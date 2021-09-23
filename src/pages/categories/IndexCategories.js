@@ -36,7 +36,6 @@ class IndexCategories extends Component {
     }
 
     renderAction(res){
-        // const node = this.reff.current;
         return (
             <>
                 <button className="btn btn-primary btn-sm mx-1" onClick={() => this.handleEdit(res)}><i className="fas fa-edit"></i></button>
