@@ -10,10 +10,10 @@ const Dashboard = () => {
                 <br/>
                 <div className="row">
                     <div className="col-6">
-                        <PageJob/>
+                        <PageCount/>
                     </div>
                     <div className="col-6">
-                        <PageCount/>
+                        <PageJob/>
                     </div>
                 </div>
             </div>

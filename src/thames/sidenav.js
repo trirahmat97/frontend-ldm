@@ -9,12 +9,15 @@ const Sidenav = ({auth}) => {
                 <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div className="sb-sidenav-menu">
                         <div className="nav">
-                            <div className="sb-sidenav-menu-heading">Home</div>
-                            <NavLink className="nav-link" to="/dashboard">
-                                <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </NavLink>
-
+                            {auth.role === 'Admin' || auth.role === 'Super-Visor' ? (
+                                <>
+                                    <div className="sb-sidenav-menu-heading">Home</div>
+                                    <NavLink className="nav-link" to="/dashboard">
+                                        <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
+                                        Dashboard
+                                    </NavLink>
+                                </>
+                            ): null }
                             
                             <div className="sb-sidenav-menu-heading">Management</div>
                             {auth.role === 'Admin' || auth.role === 'Super-Visor' ? (
@@ -48,7 +51,7 @@ const Sidenav = ({auth}) => {
                     </div>
                     <div className="sb-sidenav-footer">
                         <div className="small">Logged in as:</div>
-                        Politeknik Negeri Lampung
+                        {auth.role} / {auth.name}
                     </div>
                 </nav>
             </div>

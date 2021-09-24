@@ -3,13 +3,8 @@ import {connect} from 'react-redux';
 import {getJobs} from '../../actions/jobAction';
 
 class PageJob extends Component {
-    // constructor(props){
-    //     super(props);
-
-    // }
-
     componentDidMount(){
-        this.props.getJobs(1, 10);
+        this.props.getJobs(1, 6);
     }
 
     renderDataJob(){

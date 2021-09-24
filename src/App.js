@@ -29,7 +29,7 @@ const App = ({auth}) => {
                             <Sidenav/>
                             <div id="layoutSidenav_content">
                                 <Switch>
-                                    <Route exact path='/' component={Dashboard} />
+                                    <Route exact path='/' component={auth.role === 'Admin' || auth.role === 'Super-Visor' ? Dashboard : IndexJob} />
                                     <Route path='/users/' component={Users} />
                                     <Route exact path='/add-user/' component={CreateUser} />
                                     <Route path='/edit-user/:id' exact component={EditUser} />

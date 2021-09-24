@@ -1,4 +1,4 @@
-import {GET_JOB, ADD_MESSAGE, ADD_JOB, DELETE_JOB, EDIT_JOB} from './type';
+import {GET_JOB, ADD_MESSAGE, ADD_JOB, DELETE_JOB, EDIT_JOB, GET_REPORT} from './type';
 import apildm from '../apis/apildm';
 import history from '../history';
 
@@ -14,6 +14,26 @@ export const getJobs = (page, size) => async dispatch => {
     if(response.data.resCode === '200'){
         dispatch({
             type: GET_JOB,
+            payload: response.data.values
+        });
+    }else{
+        dispatch({
+            type: ADD_MESSAGE,
+            payload: {
+                message: response.data.resDesc,
+                infoMessage: 'Error!',
+                colorMessage: 'warning',
+                isSubmiting: false
+            }
+        });
+    }
+}
+
+export const getReport = (page, size) => async dispatch => {
+    const response = await apildm.get(`/job/report?size=${size}&page=${page}`, config);
+    if(response.data.resCode === '200'){
+        dispatch({
+            type: GET_REPORT,
             payload: response.data.values
         });
     }else{

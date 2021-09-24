@@ -8,7 +8,6 @@ import apildm from '../apis/apildm';
 import HeaderBody from '../components/HeaderBody';
 import Message from '../components/Message';
 
-
 class Users extends Component {
     constructor(){
         super();
@@ -143,7 +142,7 @@ class Users extends Component {
                             {this.renderCreateUser()}
                         </div>
                         <div className="card-body">
-                            <table className="table table-striped table-hover">
+                            <table className="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>No</th>

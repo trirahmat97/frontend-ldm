@@ -30,3 +30,6 @@ export const EDIT_JOB = 'EDIT_JOB';
 export const GET_JOB = 'GET_JOB';
 export const DELETE_JOB = 'DELETE_JOB';
 
+//report
+export const GET_REPORT = 'GET_REPORT';
+

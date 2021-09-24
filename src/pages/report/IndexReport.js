@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
-import {getJobs} from '../../actions/jobAction';
+import {getReport} from '../../actions/reportAction';
 
 import HeaderBody from '../../components/HeaderBody';
 
@@ -14,7 +14,7 @@ class IndexReport extends Component {
         }
     }
     componentDidMount(){
-        this.props.getJobs(this.state.currentPage, this.state.todosPerPage);
+        this.props.getReport(this.state.currentPage, this.state.todosPerPage);
     }
 
     renderAction(){
@@ -27,7 +27,7 @@ class IndexReport extends Component {
     }
 
     renderDataJob(){
-        return this.props.jobs.data.filter(data => data.progress === 100).map((res, index) => {
+        return this.props.reports.data.filter(data => data.progress === 100).map((res, index) => {
             return(
                 <tbody key={res.id}>
                     <tr>
@@ -50,12 +50,12 @@ class IndexReport extends Component {
         this.setState({
             currentPage: page
         });
-        this.props.getJobs(this.state.currentPage, this.state.todosPerPage);
+        this.props.getReport(this.state.currentPage, this.state.todosPerPage);
     }
 
     renderPaginantion() {
-        const totalPage = this.props.jobs.totalPages;
-        const pageActive = this.props.jobs.currentPage;
+        const totalPage = this.props.reports.totalPages;
+        const pageActive = this.props.reports.currentPage;
         var numberPage = [];
         for (let i = 1; i <= totalPage; i++) {
             numberPage.push(i);
@@ -76,7 +76,7 @@ class IndexReport extends Component {
                             )
                         })
                     }
-                    <li className={pageActive ===  this.props.jobs.totalPages ? "page-item disabled" : "page-item"} key="ko">
+                    <li className={pageActive ===  this.props.reports.totalPages ? "page-item disabled" : "page-item"} key="ko">
                         <Link className="page-link" to="#" onClick={() =>this.handlePage(pageActive + 1)}>Next</Link>
                     </li>
                 </ul>
@@ -125,7 +125,7 @@ class IndexReport extends Component {
 
 const mapStateToProps = state => {
     return {
-        jobs: state.jobs
+        reports: state.reports
     }
 }
-export default connect(mapStateToProps, {getJobs})(IndexReport);
+export default connect(mapStateToProps, {getReport})(IndexReport);
