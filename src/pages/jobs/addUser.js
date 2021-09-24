@@ -84,7 +84,9 @@ class AddUser extends Component {
                     <td>{user.nomor_telpon}</td>
                     <td>{user.email}</td>
                     <td>
-                        <button className="btn btn-danger btn-sm mx-1" onClick={() => {this.handleDeleteUser(user.id)}}><i className="fas fa-trash"></i></button>
+                        {this.props.auth.role === 'Admin' || this.props.auth.role === 'Super-Visor' ? (
+                            <button className="btn btn-danger btn-sm mx-1" onClick={() => {this.handleDeleteUser(user.id)}}><i className="fas fa-trash"></i></button>
+                        ):null}
                     </td>
                 </tr>
             )
@@ -120,9 +122,10 @@ class AddUser extends Component {
                             Sent user to job
                         </p>
                         <br/>
+                        {this.props.auth.role === 'Admin' || this.props.auth.role === 'Super-Visor' ? (
                         <form onSubmit={this.handleFormSubmit}>
                             <div className="row">
-                                <div className="col-3">
+                                <div className="col-6">
                                     <div className="mb-3">
                                         <label className="form-label">Pilih User : </label>
                                         <select name="user" className="form-select" aria-label="Default select example" value={this.state.user} onChange={this.handeChange}>
@@ -131,13 +134,15 @@ class AddUser extends Component {
                                         </select>
                                     </div>
                                 </div>
-                                <div className="col-1">
+                                <div className="col-6">
                                     <div style={{marginTop: '27px'}}>
                                         <button className="btn btn-success" type="submit"><i className="fas fa-plus"></i></button>
+                                        <span onClick={() => this.handleGetJobById()} class="btn btn-primary mx-2"><i className="fa fa-sync-alt"></i></span>
                                     </div>
                                 </div>
                             </div>
                         </form>
+                        ): null }
                         <div className="col-12">
                             <div className="mb-3">
                                 <table className="table table-bordered">
@@ -166,7 +171,8 @@ class AddUser extends Component {
 const mapStateToProps = (state) => {
     return {
         messages: state.messages,
-        users: state.users
+        users: state.users,
+        auth: state.auth
     }
 }
 

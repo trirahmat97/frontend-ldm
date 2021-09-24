@@ -126,8 +126,12 @@ class AddProduct extends Component {
                     <td>{pro.poduct_job.lokasi_pemasangan}</td>
                     <td>{pro.poduct_job.keterangan}</td>
                     <td>
-                        <button className="btn btn-primary btn-sm mx-1" onClick={() => {this.handleEditProduct(pro)}}><i className="fas fa-edit"></i></button>
-                        <button className="btn btn-danger btn-sm mx-1" onClick={() => {this.handleDeleteUser(pro.id)}}><i className="fas fa-trash"></i></button>
+                        {this.props.auth.role === 'Admin' || this.props.auth.role === 'Super-Visor' ? (
+                            <>
+                                <button className="btn btn-primary btn-sm mx-1" onClick={() => {this.handleEditProduct(pro)}}><i className="fas fa-edit"></i></button>
+                                <button className="btn btn-danger btn-sm mx-1" onClick={() => {this.handleDeleteUser(pro.id)}}><i className="fas fa-trash"></i></button>
+                            </>
+                        ):null}
                     </td>
                 </tr>
             )
@@ -143,6 +147,7 @@ class AddProduct extends Component {
                             List Product to job
                         </p>
                         <br/>
+                        {this.props.auth.role === 'Admin' || this.props.auth.role === 'Super-Visor' ? (
                         <form onSubmit={this.handleFormSubmit}>
                             <div className="row">
                                 <div className="col-3">
@@ -188,7 +193,7 @@ class AddProduct extends Component {
                                 </div>
                             </div>
                         </form>
-
+                        ): null }
                         <div className="mb-3">
                             <table className="table table-bordered">
                                 <thead>
@@ -215,7 +220,8 @@ class AddProduct extends Component {
 
 const mapStateToProps = state => {
     return {
-        products: state.products
+        products: state.products,
+        auth: state.auth
     }
 }
 

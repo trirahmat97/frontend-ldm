@@ -27,7 +27,6 @@ export const getJobs = (page, size) => async dispatch => {
             }
         });
     }
-    history.push('/jobs');
 }
 
 export const createJob = (data) => async distpatch => {

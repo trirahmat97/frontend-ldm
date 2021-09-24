@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import history from './history';
 
 import Login from "./pages/Login";
-import Body from "./thames/body";
 import Body2 from "./thames/body2";
 import Footer from "./thames/footer";
 import Navbar from "./thames/navbar";
@@ -20,9 +19,7 @@ import IndexJob from "./pages/jobs/indexJob";
 import createJob from "./pages/jobs/createJob";
 import EditJob from "./pages/jobs/editJob";
 import IndexReport from "./pages/report/IndexReport";
-
 const App = ({auth}) => {
-    console.log(auth.tokenExpires);
     if(auth.isAuthenticated){
         return (
             <Router history={history}>
@@ -31,15 +28,8 @@ const App = ({auth}) => {
                         <div id="layoutSidenav">
                             <Sidenav/>
                             <div id="layoutSidenav_content">
-                                <div>
-                                    {
-                                        setTimeout(() => {
-                                            alert('login berakhir');
-                                        }, auth.tokenExpires)
-                                    }
-                                </div>
                                 <Switch>
-                                    <Route exact path='/' component={Body} />
+                                    <Route exact path='/' component={Dashboard} />
                                     <Route path='/users/' component={Users} />
                                     <Route exact path='/add-user/' component={CreateUser} />
                                     <Route path='/edit-user/:id' exact component={EditUser} />

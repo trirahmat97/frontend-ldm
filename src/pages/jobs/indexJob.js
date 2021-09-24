@@ -52,15 +52,17 @@ class IndexJob extends Component {
         }
         return (
             <>
+                {this.props.auth.role === 'Admin' || this.props.auth.role === 'Super-Visor' ? (
+                    <button className="btn btn-danger btn-sm mx-1" onClick={() => handleDelete(id)}><i className="fas fa-trash"></i></button>
+                ) : null }
                 <button className="btn btn-primary btn-sm mx-1" onClick={() => {this.handleEdit(id)}}><i className="fas fa-edit"></i></button>
-                <button className="btn btn-danger btn-sm mx-1" onClick={() => handleDelete(id)}><i className="fas fa-trash"></i></button>
                 <button className="btn btn-success btn-sm mx-1" onClick={() => {}}><i className="fas fa-cloud-upload-alt"></i></button>
             </>
         )
     }
 
     renderDataJob(){
-        return this.props.jobs.data.map((res, index) => {
+        return this.props.jobs.data.filter(data => data.progress !== 100).map((res, index) => {
             return(
                 <tbody key={res.id}>
                     <tr>
@@ -140,11 +142,14 @@ class IndexJob extends Component {
                         <div className="card-header">
                             <i className="fas fa-table me-1"></i>
                             Data Jobs
-                            <div className="float-end">
-                                <Link to="/add-job" className="btn btn-success mt-10">
-                                    <i className="fas fa-plus-square"></i> Create Job
-                                </Link>
-                            </div>
+                            {this.props.auth.role === 'Admin' || this.props.auth.role === 'Super-Visor' ? (
+                                <div className="float-end">
+                                    <Link to="/add-job" className="btn btn-success mt-10">
+                                        <i className="fas fa-plus-square"></i> Create Job
+                                    </Link>
+                                </div>                                                                  
+                            ): null}
+                            
                         </div>
                         <div className="card-body">
                             <table className="table table-bordered">
@@ -172,7 +177,8 @@ class IndexJob extends Component {
 
 const mapStateToProps = state => {
     return {
-        jobs: state.jobs
+        jobs: state.jobs,
+        auth: state.auth
     }
 }
 

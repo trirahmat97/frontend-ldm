@@ -151,11 +151,13 @@ class EditJob extends Component {
                                         </div>
                                     </div>
                                     <div className="mb-3">
-                                        <button className="btn btn-primary me-2" disabled={this.props.messages.isSubmiting}>
-                                            {
-                                                this.props.messages.isSubmiting ? ("Saving Data") : ("Update")
-                                            }
-                                        </button>
+                                        {this.props.auth.role === 'Admin' || this.props.auth.role === 'Super-Visor' ? (
+                                            <button className="btn btn-primary me-2" disabled={this.props.messages.isSubmiting}>
+                                                {
+                                                    this.props.messages.isSubmiting ? ("Saving Data") : ("Update")
+                                                }
+                                            </button>
+                                        ):null}
                                         <Link to="/jobs" className="btn btn-secondary">Cancel</Link>
                                     </div>
                                 </div>

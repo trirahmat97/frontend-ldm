@@ -2,7 +2,6 @@ import React from 'react';
 
 import PageJob from './dashboard/PageJob';
 import PageCount from './dashboard/PageCount';
-import PageGrafik from './dashboard/PageGrafik';
 
 const Dashboard = () => {
     return (
@@ -11,11 +10,10 @@ const Dashboard = () => {
                 <br/>
                 <div className="row">
                     <div className="col-6">
-                        <PageGrafik/>
+                        <PageJob/>
                     </div>
                     <div className="col-6">
                         <PageCount/>
-                        <PageJob/>
                     </div>
                 </div>
             </div>

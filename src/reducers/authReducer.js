@@ -5,7 +5,8 @@ const INITIAL_STATE = {
     user: localStorage.getItem("user") ? localStorage.getItem("user") : null,
     token: localStorage.getItem("token") ? localStorage.getItem("token") : null,
     tokenExpires: localStorage.getItem("tokenExpires") ? localStorage.getItem("tokenExpires") : 0,
-    role: localStorage.getItem("role") ? localStorage.getItem("role") : null
+    role: localStorage.getItem("role") ? localStorage.getItem("role") : null,
+    name: localStorage.getItem("name") ? localStorage.getItem("name") : null,
 };
 
 const AuthReducer = (state = INITIAL_STATE, action) => {
@@ -16,13 +17,15 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
             localStorage.setItem("isAuthenticated", true);
             localStorage.setItem("tokenExpires", action.payload.expires);
             localStorage.setItem("role", action.payload.role);
+            localStorage.setItem("name", action.payload.name);
             return {
                 ...state,
                 isAuthenticated: true,
                 user: action.payload.userId,
                 token: action.payload.access_token,
                 tokenExpires: action.payload.expires,
-                role: action.payload.role
+                role: action.payload.role,
+                name: action.payload.name
             }
         case SIGN_OUT:
             localStorage.clear();
@@ -32,7 +35,8 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
                 user: null,
                 token: null,
                 tokenExpires: 0,
-                role: 0
+                role: 0,
+                name: null
             }
         default:
             return state;

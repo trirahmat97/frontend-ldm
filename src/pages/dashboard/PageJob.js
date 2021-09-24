@@ -1,6 +1,39 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {getJobs} from '../../actions/jobAction';
 
 class PageJob extends Component {
+    // constructor(props){
+    //     super(props);
+
+    // }
+
+    componentDidMount(){
+        this.props.getJobs(1, 10);
+    }
+
+    renderDataJob(){
+        return this.props.jobs.data.filter(data => data.progress !== 100).map((res, index) => {
+            return (
+                <tbody key={res.id}>
+                    <tr>
+                        <td rowSpan={2}>{index + 1}</td>
+                        <td>{res.deskripsi}</td>
+                        <td><center><span className="badge bg-success">{res.status_teknisi}</span></center></td>
+                        <td><center><span className="badge bg-success">{res.status_supervisor}</span></center></td>
+                    </tr>
+                    <tr>
+                        <td colSpan={3}>
+                            <div className="progress" style={{height: '15px'}}>
+                                <div className="progress-bar progress-bar-striped bg-success progress-bar-animated" style={{width: `${res.progress}%`}} role="progressbar" aria-valuenow={res.progress} aria-valuemin="0" aria-valuemax="100">{res.progress}%</div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            )
+        })
+    }
+
     render(){
         return (
             <div className="card mb-4">
@@ -18,21 +51,7 @@ class PageJob extends Component {
                                 <th>Super Visior</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td rowSpan={2}>1</td>
-                                <td>Test air pad</td>
-                                <td>Test air pad</td>
-                                <td>Test air pad</td>
-                            </tr>
-                            <tr>
-                                <td colSpan={3}>
-                                    <div className="progress">
-                                        <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style={{width: "75%"}}>75%</div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                        {this.renderDataJob()}
                     </table>
                 </div>
             </div>
@@ -40,4 +59,10 @@ class PageJob extends Component {
     }
 }
 
-export default PageJob;
+const mapStateToProps = state => {
+    return {
+        jobs: state.jobs
+    }
+}
+
+export default connect(mapStateToProps, {getJobs})(PageJob);
